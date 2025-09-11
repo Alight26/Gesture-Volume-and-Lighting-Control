@@ -34,7 +34,7 @@ def thumb_tip(hand_landmarks, img, h, w):
 
         # Drawing the circle around the thumb 
         thumb_point = cv.circle(img, (thumb_x, thumb_y), 20, (100, 55, 0), -1)
-        return thumb_tip
+        return thumb_point
 
 
 
@@ -60,12 +60,38 @@ def connector(pointy, thumby, img, h, w):
 
         true_length = math.sqrt(x_values + y_values)
         print(true_length)
+        length(img, true_length)
 
         return connection
 
-"""
-def length(point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_y):
-        x_values = """
+
+def length(img, true_length):
+        arr = []
+        point = true_length
+        count = 0
+
+        # finding the circle distance to see if I can draw another circle
+        int_checker = point / 18
+
+        # Checks if it is the correct length and an integer
+        if isinstance(int_checker, int):
+                temp_circle = cv.circle(img, int_checker, 20, (100, 55, 0), -1)
+                arr.append((int_checker, temp_circle))
+                count += 1
+                
+        # check if length between thumb and index is smaller than the last array element
+        if point < arr[-1][0]:
+                arr.pop(count)
+                count -= 1
+
+        return 
+
+
+
+
+
+
+        
 
 
    
