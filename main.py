@@ -10,7 +10,7 @@ mp_drawing = mp.solutions.drawing_utils
 hands = mp_hands.Hands(min_detection_confidence = 0.5,
                        min_tracking_confidence = 0.5)
 
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 
 while True:
     ret, img = cap.read()

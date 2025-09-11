@@ -1,6 +1,13 @@
 import cv2 as cv 
 import mediapipe as mp
 import math
+import subprocess, time
+
+def volume_up():
+    subprocess.run(["cliclick", "kp:F12"])
+
+def volume_down():
+    subprocess.run(["cliclick", "kp:F11"])
 
 # Finds the location of the pointer fingers tip and draws a circle around it 
 def pointer_tip(hand_landmarks, img, h, w):
@@ -60,20 +67,44 @@ def connector(pointy, thumby, img, h, w):
 
         true_length = math.sqrt(x_values + y_values)
         
-        test = length(img, true_length, point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_x)
+
 
         return
 
 
-def length(img, true_length, point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_y):
-        arr = []
-        point = true_length
-        count = 0
 
-        mid_x = ((point_tip_x + thumb_tip_x) / 2)
-        mid_y = ((point_tip_y + thumb_tip_y) / 2)
+_last = None
+_last_time = 0
 
-        temp_circle = cv.circle(img, (int(mid_x), int(mid_y)), 10, (100, 55, 0), 1)
+def length(true_length):
+    global _last, _last_time
+
+    now = time.time()
+
+    if _last is None:
+        _last = true_length
+        return
+
+    diff = true_length - _last
+
+    # only trigger if enough change & not too fast
+    if diff >= 100 and (now - _last_time) > 0.15:
+        volume_up()
+        print("Volume up")
+        _last_time = now
+
+    elif diff <= -100 and (now - _last_time) > 0.15:
+        volume_down()
+        print("Volume down")
+        _last_time = now
+
+    # update baseline
+    _last = true_length
+
+
+
+
+        
 '''
 
         # finding the circle distance to see if I can draw another circle
@@ -96,6 +127,10 @@ def length(img, true_length, point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_y)
         return 
 
 '''
+
+
+
+
 
 
 
