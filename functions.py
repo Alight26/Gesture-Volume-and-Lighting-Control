@@ -33,3 +33,30 @@ def thumb_tip(hand_landmarks, img, h, w):
 
         # Drawing the circle around the thumb 
         thumb_point = cv.circle(img, (thumb_x, thumb_y), 20, (100, 55, 0), -1)
+        return thumb_tip
+
+
+
+
+def connector(pointy, thumby, img, h, w):
+        # getting the landmarks for each thumb and pointer tip
+        point_tip = pointy 
+        thumb_tip = thumby
+
+        point_tip_x = int(point_tip.x * w)
+        point_tip_y = int(point_tip.y * h)
+
+        thumb_tip_x = int(thumb_tip.x * w)
+        thumb_tip_y = int(thumb_tip.y * h)
+
+
+
+        # Uses the tip points already calculated in other functions and connects them
+        connection = cv.line(img, (point_tip_x, point_tip_y), (thumb_tip_x, thumb_tip_y),(0, 255, 0), 10)
+
+        return connection
+
+
+   
+
+

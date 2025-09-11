@@ -32,9 +32,11 @@ while True:
             cv.putText(img, hand_label, (x,y-20), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             # getting the landmark of the pointer fingers and drawing a circle around it
-            mine.pointer_tip(hand_landmarks, img, h, w)
+            pointy = mine.pointer_tip(hand_landmarks, img, h, w)
             # Getting the landmark of the thumb tip and drawing a circle around it 
-            mine.thumb_tip(hand_landmarks, img, h, w)
+            thumby = mine.thumb_tip(hand_landmarks, img, h, w)
+
+            connection = mine.connector(hand_landmarks.landmark[8], hand_landmarks.landmark[4], img, h, w)
 
 
 
