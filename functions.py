@@ -1,5 +1,6 @@
 import cv2 as cv 
 import mediapipe as mp
+import math
 
 # Finds the location of the pointer fingers tip and draws a circle around it 
 def pointer_tip(hand_landmarks, img, h, w):
@@ -37,7 +38,7 @@ def thumb_tip(hand_landmarks, img, h, w):
 
 
 
-
+# Connects the thumb and the index finger together
 def connector(pointy, thumby, img, h, w):
         # getting the landmarks for each thumb and pointer tip
         point_tip = pointy 
@@ -49,12 +50,22 @@ def connector(pointy, thumby, img, h, w):
         thumb_tip_x = int(thumb_tip.x * w)
         thumb_tip_y = int(thumb_tip.y * h)
 
-
+        
 
         # Uses the tip points already calculated in other functions and connects them
         connection = cv.line(img, (point_tip_x, point_tip_y), (thumb_tip_x, thumb_tip_y),(0, 255, 0), 10)
 
+        x_values = (point_tip_x - thumb_tip_x) ** 2
+        y_values = (point_tip_y - thumb_tip_y) ** 2
+
+        true_length = math.sqrt(x_values + y_values)
+        print(true_length)
+
         return connection
+
+"""
+def length(point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_y):
+        x_values = """
 
 
    
