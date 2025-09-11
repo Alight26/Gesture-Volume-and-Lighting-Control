@@ -59,34 +59,43 @@ def connector(pointy, thumby, img, h, w):
         y_values = (point_tip_y - thumb_tip_y) ** 2
 
         true_length = math.sqrt(x_values + y_values)
-        print(true_length)
-        length(img, true_length)
+        
+        test = length(img, true_length, point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_x)
 
-        return connection
+        return
 
 
-def length(img, true_length):
+def length(img, true_length, point_tip_x, point_tip_y, thumb_tip_x, thumb_tip_y):
         arr = []
         point = true_length
         count = 0
 
+        mid_x = ((point_tip_x + thumb_tip_x) / 2)
+        mid_y = ((point_tip_y + thumb_tip_y) / 2)
+
+        temp_circle = cv.circle(img, (int(mid_x), int(mid_y)), 10, (100, 55, 0), 1)
+'''
+
         # finding the circle distance to see if I can draw another circle
         int_checker = point / 18
 
+        int_check = isinstance(int_checker, int)
+
         # Checks if it is the correct length and an integer
-        if isinstance(int_checker, int):
-                temp_circle = cv.circle(img, int_checker, 20, (100, 55, 0), -1)
+        if int_check is True:
+                temp_circle = cv.circle(img, (x_values, y_values), 20, (100, 55, 0), -1)
                 arr.append((int_checker, temp_circle))
                 count += 1
                 
         # check if length between thumb and index is smaller than the last array element
-        if point < arr[-1][0]:
-                arr.pop(count)
-                count -= 1
+        if point > 18 and len(arr) >= 1:
+                if point < arr[-1][0]:
+                    arr.pop(count)
+                    count -= 1
 
         return 
 
-
+'''
 
 
 
