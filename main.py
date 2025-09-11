@@ -30,6 +30,21 @@ while True:
             x,y = int(hand_landmarks.landmark[0].x * w), int(hand_landmarks.landmark[0].y * h)
             cv.putText(img, hand_label, (x,y-20), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
+            # getting the landmark of the pointer fingers
+            pointer_tip = hand_landmarks.landmark[8]
+
+            # extracting those coordinates 
+            pointer_x = pointer_tip.x
+            pointer_y = pointer_tip.y
+
+            # Converting to pixel coordinates 
+            pointer_x = int(pointer_x * w)
+            pointer_y = int(pointer_y * h)
+
+            # Drawing a circle around index finger tip 
+            cv.circle(img, (pointer_x, pointer_y), 20, (100, 55, 0), -1)
+
+
 
     cv.imshow('img', img)
     k = cv.waitKey(1) & 0xff
